@@ -109,7 +109,7 @@ const LoginPage = () => {
                 <div className="ass1-login__send">
                   <Link to="/register">Đăng ký một tài khoản</Link>
                   <button type="submit" className="ass1-btn">
-                    login
+                    Đăng Nhập
                   </button>
                 </div>
               </form>
