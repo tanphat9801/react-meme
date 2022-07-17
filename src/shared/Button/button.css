@@ -1,0 +1,11 @@
+.btn {
+  font-size: 16px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+}
+
+.btn .btn-default{
+  background-color: #0c56d0;
+}

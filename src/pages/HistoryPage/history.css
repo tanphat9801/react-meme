@@ -1,0 +1,5 @@
+.ass1-section__item{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+} 
