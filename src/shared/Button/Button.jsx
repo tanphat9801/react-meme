@@ -7,6 +7,7 @@ const Button = ({
   loading,
   loadingPos = "left",
   onClick,
+  htmlType,
   ab,
   ...restProps
 }) => {
@@ -19,36 +20,37 @@ const Button = ({
     "ass1-btn"
   );
 
+  const content = (
+    <>
+      {loading && loadingPos === "left" && <IconLoading width="1em" />}
+      {children}
+      {loading && loadingPos === "right" && <IconLoading width="1em" />}
+    </>
+  );
+
+  const _onClick = (evt) => {
+    if (!loading) {
+      onclick && onClick(evt);
+    }
+  };
+
+  const injectedProps = {
+    className: classes,
+    type: htmlType,
+    onClick: _onClick,
+    ...restProps,
+  };
+
   if (ab === "a") {
     return (
       <>
-        <a
-          type={type}
-          className={classes}
-          name={name}
-          onClick={onClick}
-          {...restProps}
-        >
-          {loading && loadingPos === "left" && <IconLoading width="1em" />}
-          {children}
-          {loading && loadingPos === "right" && <IconLoading width="1em" />}
-        </a>
+        <a {...injectedProps}>{content}</a>
       </>
     );
   }
   return (
     <>
-      <button
-        type={type}
-        className={classes}
-        name={name}
-        onClick={onClick}
-        {...restProps}
-      >
-        {loading && loadingPos === "left" && <IconLoading width="1em" />}
-        {children}
-        {loading && loadingPos === "right" && <IconLoading width="1em" />}
-      </button>
+      <button {...injectedProps}>{content}</button>
     </>
   );
 };

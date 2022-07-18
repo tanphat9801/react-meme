@@ -4,10 +4,13 @@ import { validateForm } from "../../helper";
 import Input from "../../shared/Input/Input";
 import { useDispatch } from "react-redux";
 import { actLoginAsync } from "../../stores/Auth/action";
+import Button from "./../../shared/Button/Button";
 
 const LoginPage = () => {
   const dispatch = useDispatch();
   const [isDirty, setIsDirty] = useState(true);
+  const [formError, setFormError] = useState("");
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: {
       value: "admin@gmail.com",
@@ -74,9 +77,19 @@ const LoginPage = () => {
     }
 
     const { email, password } = formData;
-
+    if (loading) {
+      return;
+    }
+    setLoading(true);
+    setFormError("");
     dispatch(actLoginAsync(email.value, password.value)).then((res) => {
-      console.log("check res", res);
+      if (res.check) {
+        console.log("thanh cong");
+      } else {
+        console.log("that bai ");
+        setFormError(res.error);
+      }
+      setLoading(false);
     });
   };
 
@@ -87,6 +100,7 @@ const LoginPage = () => {
           <div className="ass1-login__content">
             <h2>Đăng nhập</h2>
             <div className="ass1-login__form">
+              <p className="text-err">{formError}</p>
               <form onSubmit={handleSubmit}>
                 <Input
                   type="email"
@@ -108,9 +122,9 @@ const LoginPage = () => {
                 />
                 <div className="ass1-login__send">
                   <Link to="/register">Đăng ký một tài khoản</Link>
-                  <button type="submit" className="ass1-btn">
+                  <Button loading={loading} type="submit" className="ass1-btn">
                     Đăng Nhập
-                  </button>
+                  </Button>
                 </div>
               </form>
             </div>
