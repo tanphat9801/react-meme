@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { validateForm } from "../../helper";
 import Input from "../../shared/Input/Input";
 import { useDispatch } from "react-redux";
@@ -8,6 +8,7 @@ import Button from "./../../shared/Button/Button";
 
 const LoginPage = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [isDirty, setIsDirty] = useState(true);
   const [formError, setFormError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -17,7 +18,7 @@ const LoginPage = () => {
       error: "",
     },
     password: {
-      value: "123123",
+      value: "123456",
       error: "",
     },
   });
@@ -84,9 +85,8 @@ const LoginPage = () => {
     setFormError("");
     dispatch(actLoginAsync(email.value, password.value)).then((res) => {
       if (res.check) {
-        console.log("thanh cong");
+        history.push("/");
       } else {
-        console.log("that bai ");
         setFormError(res.error);
       }
       setLoading(false);
@@ -100,7 +100,7 @@ const LoginPage = () => {
           <div className="ass1-login__content">
             <h2>Đăng nhập</h2>
             <div className="ass1-login__form">
-              <p className="text-err">{formError}</p>
+              {formError && <p className="text-err">{formError}</p>}
               <form onSubmit={handleSubmit}>
                 <Input
                   type="email"

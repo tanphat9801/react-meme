@@ -7,4 +7,15 @@ export const authService = {
       password,
     });
   },
+  fetchMe({ userid, token }) {
+    console.log(userid);
+    return api.call().get("/member/member.php", {
+      params: {
+        userid,
+      },
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
+  },
 };

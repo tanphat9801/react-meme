@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import SectionItem from "../../components/SectionItem";
 import Button from "../../shared/Button/Button";
 import { actListPostAsync } from "../../stores/Post/action";
@@ -11,7 +12,6 @@ const HomePage = () => {
     (state) => state.Post.listPaging
   );
 
-  console.log("check posts", posts);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(actListPostAsync());
@@ -63,7 +63,7 @@ const HomePage = () => {
                 </div>
                 <div>
                   Vui lòng đăng nhập để xem nội dung này
-                  <a href="/">Đăng nhập</a>
+                  <Link to="/login">Đăng nhập</Link>
                 </div>
               </aside>
             </div>

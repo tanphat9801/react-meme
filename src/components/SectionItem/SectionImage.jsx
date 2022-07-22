@@ -6,7 +6,7 @@ export default function SectionImage({ image }) {
     <>
       <div className="ass1-section__image">
         <Link to="/">
-          <img src={image } alt="" />
+          <img src={image} alt="" />
         </Link>
       </div>
     </>

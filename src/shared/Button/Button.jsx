@@ -30,7 +30,7 @@ const Button = ({
 
   const _onClick = (evt) => {
     if (!loading) {
-      onclick && onClick(evt);
+      onClick && onClick(evt);
     }
   };
 
