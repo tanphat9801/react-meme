@@ -8,11 +8,15 @@ import { actListPostAsync } from "../../stores/Post/action";
 
 const HomePage = () => {
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const data = useSelector((state) => state.Auth.currentUser) || {};
+
+  const nickName = data.nickName;
+
   const { list: posts, currentPage } = useSelector(
     (state) => state.Post.listPaging
   );
 
-  const dispatch = useDispatch();
   useEffect(() => {
     dispatch(actListPostAsync());
   }, [dispatch]);
@@ -61,10 +65,14 @@ const HomePage = () => {
                 <div className="ass1-content-head__t">
                   <div>Bài viết gần đây của bạn.</div>
                 </div>
-                <div>
-                  Vui lòng đăng nhập để xem nội dung này
-                  <Link to="/login">Đăng nhập</Link>
-                </div>
+                {nickName ? (
+                  <div>Bài viết gần đây của {nickName}</div>
+                ) : (
+                  <div>
+                    Vui lòng đăng nhập để xem nội dung này
+                    <Link to="/login">Đăng nhập</Link>
+                  </div>
+                )}
               </aside>
             </div>
           </div>

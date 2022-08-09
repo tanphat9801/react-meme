@@ -7,8 +7,15 @@ export const authService = {
       password,
     });
   },
-  fetchMe({ userid, token }) {
-    console.log(userid);
+  register({ fullname, email, password, repassword }) {
+    return api.call().post("/member/register.php", {
+      email,
+      fullname,
+      password,
+      repassword,
+    });
+  },
+  fetchMe(userid, token) {
     return api.call().get("/member/member.php", {
       params: {
         userid,

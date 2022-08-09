@@ -1,7 +1,10 @@
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import SectionItem from "../../components/SectionItem";
 
 const HistoryPage = () => {
+  const data = useSelector((state) => state.Auth.currentUser) || {};
+
   return (
     <>
       <main>
@@ -16,13 +19,13 @@ const HistoryPage = () => {
               <div className="ass1-head-user__info">
                 <div className="ass1-head-user__info-head">
                   <div className="ass1-head-user__name">
-                    <span>Trần Công Lực</span>
-                    <i>
-                      <img src="fonts/emotion/svg/Verified.svg" alt="" />
-                    </i>
+                    <span>{data.nickName}</span>
                   </div>
                   <div className="w-100" />
-                  <Link href="/" className="ass1-head-user__btn-follow ass1-btn">
+                  <Link
+                    href="/"
+                    className="ass1-head-user__btn-follow ass1-btn"
+                  >
                     Theo dõi
                   </Link>
                   <Link

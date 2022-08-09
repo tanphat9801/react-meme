@@ -8,11 +8,12 @@ export const Box = styled.div`
 `;
 
 export const BoxItem = styled.div`
-  display: block;
+  display: flex;
+  flex-wrap: wrap;
 `;
 
 export const Item = styled.p`
   font-size: 14px;
   color: gray;
-  padding: 10px 0;
+  padding: 10px;
 `;

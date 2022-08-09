@@ -10,9 +10,17 @@ import HistoryPage from "./pages/HistoryPage/HistoryPage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import ChangePassword from "./pages/ChangePassword/ChangePassword";
 import SearchPage from "./pages/SearchPage/SearchPage";
-
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { actFetchMeAsync } from "./stores/Auth/action";
+import { actFetchCategoryAsync } from "./stores/Category/action";
 
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(actFetchCategoryAsync());
+    dispatch(actFetchMeAsync());
+  }, [dispatch]);
 
   return (
     <>
@@ -22,10 +30,10 @@ function App() {
           <Route path="/change-password">
             <ChangePassword />
           </Route>
-          <Route path="/profile">
+          <Route path="/edit-profile">
             <ProfilePage />
           </Route>
-          <Route path="/history">
+          <Route path="/profile-user">
             <HistoryPage />
           </Route>
           <Route path="/detail/:slug">

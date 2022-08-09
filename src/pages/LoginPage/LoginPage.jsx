@@ -5,20 +5,22 @@ import Input from "../../shared/Input/Input";
 import { useDispatch } from "react-redux";
 import { actLoginAsync } from "../../stores/Auth/action";
 import Button from "./../../shared/Button/Button";
+import { useNotAutheticated } from "../../hook/useNotAutheticated";
 
 const LoginPage = () => {
+  useNotAutheticated();
   const dispatch = useDispatch();
   const history = useHistory();
-  const [isDirty, setIsDirty] = useState(true);
+  const [isDirty, setIsDirty] = useState(false);
   const [formError, setFormError] = useState("");
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: {
-      value: "admin@gmail.com",
+      value: "",
       error: "",
     },
     password: {
-      value: "123456",
+      value: "",
       error: "",
     },
   });
@@ -73,7 +75,6 @@ const LoginPage = () => {
     const valid = checkIsValid();
 
     if (!valid) {
-      console.log("error");
       return;
     }
 

@@ -1,66 +1,53 @@
-import Modal from "react-bootstrap/Modal";
-import { Box, BoxItem, Item } from "./Body.style";
 import { useState } from "react";
 import Button from "../../shared/Button/Button";
-
-function MyVerticallyCenteredModal(props) {
-  return (
-    <Modal
-      {...props}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      <Modal.Header closeButton></Modal.Header>
-      <Modal.Body>
-        <Box>
-          <BoxItem>
-            <Item>hiihi</Item>
-            <Item>hiihi</Item>
-            <Item>hiihi</Item>
-            <Item>hiihi</Item>
-            <Item>hiihi</Item>
-            <Item>hiihi</Item>
-          </BoxItem>
-          <BoxItem>
-            <Item>hiihi</Item>
-            <Item>hiihi</Item>
-            <Item>hiihi</Item>
-            <Item>hiihi</Item>
-            <Item>hiihi</Item>
-            <Item>hiihi</Item>
-          </BoxItem>
-          <BoxItem>
-            <Item>hiihi</Item>
-            <Item>hiihi</Item>
-            <Item>hiihi</Item>
-            <Item>hiihi</Item>
-            <Item>hiihi</Item>
-            <Item>hiihi</Item>
-          </BoxItem>
-          <BoxItem>
-            <Item>hiihi</Item>
-            <Item>hiihi</Item>
-            <Item>hiihi</Item>
-            <Item>hiihi</Item>
-            <Item>hiihi</Item>
-            <Item>hiihi</Item>
-          </BoxItem>
-        </Box>
-      </Modal.Body>
-    </Modal>
-  );
-}
+import {
+  MDBBtn,
+  MDBModal,
+  MDBModalDialog,
+  MDBModalContent,
+  MDBModalHeader,
+  MDBModalTitle,
+  MDBModalBody,
+} from "mdb-react-ui-kit";
+import { BoxItem, Item } from "./Body.style";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 export default function ModalBtn() {
-  const [modalShow, setModalShow] = useState(false);
+  const categories = useSelector((state) => state.Category.categories);
+  const [centredModal, setCentredModal] = useState(false);
+  const toggleShow = () => setCentredModal(!centredModal);
+
   return (
     <>
-      <Button name="header" onClick={() => setModalShow(true)}>Category</Button>
-      <MyVerticallyCenteredModal
-        show={modalShow}
-        onHide={() => setModalShow(false)}
-      />
+      <Button onClick={toggleShow}>Category</Button>
+
+      <MDBModal tabIndex="-1" show={centredModal} setShow={setCentredModal}>
+        <MDBModalDialog centered>
+          <MDBModalContent>
+            <MDBModalHeader>
+              <MDBModalTitle>Modal title</MDBModalTitle>
+              <MDBBtn
+                className="btn-close"
+                color="none"
+                onClick={toggleShow}
+              ></MDBBtn>
+            </MDBModalHeader>
+            <MDBModalBody>
+              <BoxItem>
+                {categories.map((category) => {
+                  const categorySlugLink = "/category" + category.id;
+                  return (
+                    <Item key={category.id}>
+                      <Link to={categorySlugLink}>{category.text}</Link>
+                    </Item>
+                  );
+                })}
+              </BoxItem>
+            </MDBModalBody>
+          </MDBModalContent>
+        </MDBModalDialog>
+      </MDBModal>
     </>
   );
 }

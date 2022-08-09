@@ -1,6 +1,9 @@
+import { useSelector } from "react-redux";
 import Button from "../../shared/Button/Button";
 import "./../../assets/images/no_image_available.jpg";
 const PostPage = () => {
+  const category = useSelector((state) => state.Category.categories);
+  console.log(category);
   return (
     <>
       <main>
@@ -66,62 +69,15 @@ const PostPage = () => {
                   >
                     Chọn danh mục
                   </span>
-                  <label className="ass1-checkbox">
-                    <input
-                      type="radio"
-                      name="state-post"
-                      defaultChecked="checked"
-                    />
-                    <span />
-                    <p>Ảnh troll</p>
-                  </label>
-                  <label className="ass1-checkbox">
-                    <input type="radio" name="state-post" />
-                    <span />
-                    <p>FapTV</p>
-                  </label>
-                  <label className="ass1-checkbox">
-                    <input
-                      type="radio"
-                      name="state-post"
-                      defaultChecked="checked"
-                    />
-                    <span />
-                    <p>Ảnh troll</p>
-                  </label>
-                  <label className="ass1-checkbox">
-                    <input type="radio" name="state-post" />
-                    <span />
-                    <p>FapTV</p>
-                  </label>
-                  <label className="ass1-checkbox">
-                    <input
-                      type="radio"
-                      name="state-post"
-                      defaultChecked="checked"
-                    />
-                    <span />
-                    <p>Ảnh troll</p>
-                  </label>
-                  <label className="ass1-checkbox">
-                    <input type="radio" name="state-post" />
-                    <span />
-                    <p>FapTV</p>
-                  </label>
-                  <label className="ass1-checkbox">
-                    <input
-                      type="radio"
-                      name="state-post"
-                      defaultChecked="checked"
-                    />
-                    <span />
-                    <p>Ảnh troll</p>
-                  </label>
-                  <label className="ass1-checkbox">
-                    <input type="radio" name="state-post" />
-                    <span />
-                    <p>FapTV</p>
-                  </label>
+                  {category.map((categoryItem) => {
+                    return (
+                      <label className="ass1-checkbox" key={categoryItem.id}>
+                        <input type="checkbox" name="state-post" />
+                        <span />
+                        <p>{categoryItem.text}</p>
+                      </label>
+                    );
+                  })}
                 </div>
                 <div className="ass1-aside__get-code">
                   <p>Share Link</p>
