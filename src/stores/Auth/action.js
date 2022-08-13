@@ -30,6 +30,7 @@ export const actFetchMeAsync = (userid, token) => {
   return async (dispatch) => {
     try {
       const response = await authService.fetchMe(userid, token);
+      console.log(response);
       const users = mappingCurrentUser(response.data);
       dispatch(actLoginSuccess(users, userid, token));
       return {

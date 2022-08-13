@@ -30,7 +30,7 @@ const Input = ({ type = "text", error, placeholder, ...props }) => {
           />
           <span>
             {type === "password" && (
-              <i className={classes} onClick={handleShowHide} />
+              <i id="eye" className={classes} onClick={handleShowHide} />
             )}
           </span>
         </div>

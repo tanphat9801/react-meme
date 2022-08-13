@@ -22,3 +22,5 @@ export const MESSAGE_FORM_ERROR = {
 
   default: "Có lỗi xảy ra vui lòng thử lại",
 };
+
+export const supportedMimeType = ["image/png", "image/jpeg", "image/gif"];

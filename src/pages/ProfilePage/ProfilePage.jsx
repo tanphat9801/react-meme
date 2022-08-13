@@ -4,24 +4,43 @@ import { AvatarProfile } from "./ProfilePage.style";
 import { useSelector } from "react-redux";
 import Avatar from "../../shared/Avatar";
 import "./profile.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { ACCES_TOKEN } from "../../constants";
+import { api } from "../../services/api";
 
 const ProfilePage = () => {
-  const data = useSelector((state) => state.Auth.currentUser) || {};
-  console.log(data.nickName);
+  const data = useSelector((state) => state.Auth.currentUser);
+  const [loading, setLoading] = useState(false);
+  const [gender, setGender] = useState("");
   const [inputValue, setInputValue] = useState({
     username: {
-      value: data.nickName,
+      value: "",
     },
     textarea: {
       value: "",
     },
   });
-  console.log(inputValue);
+
   const [userInfo, setuserInfo] = useState({
     file: [],
     filepreview: null,
   });
+
+  useEffect(() => {
+    if (data) {
+      setInputValue({
+        username: {
+          value: data.nickName,
+        },
+        textarea: {
+          value: data.description,
+        },
+      });
+      setuserInfo({
+        filepreview: data.avatar,
+      });
+    }
+  }, [data]);
 
   const handleInputChange = (event) => {
     setuserInfo({
@@ -34,13 +53,44 @@ const ProfilePage = () => {
   const handleChangeField = (e) => {
     e.preventDefault();
     const name = e.target.name;
-    const value = e.target.value;
+    const value = e.target.value.trim();
+
     setInputValue({
       ...inputValue,
       [name]: {
         value,
       },
     });
+  };
+
+  const handleSeclect = (e) => {
+    setGender(e.target.value);
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const formData = new FormData();
+      if (userInfo.file) {
+        formData.append("avatar", userInfo.file);
+      }
+      formData.append("name", inputValue.username.value);
+      formData.append("gender", gender);
+      formData.append("description", inputValue.textarea.value);
+
+      let config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: "Bearer" + localStorage.getItem(ACCES_TOKEN),
+        },
+      };
+
+      setLoading(true);
+
+      const response = await api
+        .call()
+        .post("/member/update.php", formData, config);
+      console.log(response);
+    } catch (error) {}
   };
 
   return (
@@ -50,22 +100,20 @@ const ProfilePage = () => {
           <div className="ass1-login__content">
             <p>Profile</p>
             <div className="ass1-login__form">
-              <AvatarProfile>
-                {userInfo.filepreview !== null ? (
-                  <Avatar src={userInfo.filepreview} />
-                ) : (
-                  <Avatar src={data.avatar} />
-                )}
-                <label>
-                  <i className="fa-solid fa-camera"></i>
-                  <Input
-                    type="file"
-                    style={{ display: "none" }}
-                    onChange={handleInputChange}
-                  />
-                </label>
-              </AvatarProfile>
-              <form action="#">
+              <form onSubmit={handleSubmit}>
+                <AvatarProfile>
+                  {userInfo.filepreview !== null && (
+                    <Avatar src={userInfo.filepreview} />
+                  )}
+                  <label>
+                    <i className="fa-solid fa-camera"></i>
+                    <Input
+                      type="file"
+                      style={{ display: "none" }}
+                      onChange={handleInputChange}
+                    />
+                  </label>
+                </AvatarProfile>
                 <Input
                   type="text"
                   className="form-control"
@@ -75,11 +123,11 @@ const ProfilePage = () => {
                   value={inputValue.username.value}
                   onChange={handleChangeField}
                 />
-                <select className="form-control">
-                  <option value>Giới tính</option>
-                  <option value={1}>Nam</option>
-                  <option value={0}>Nữ</option>
+                <select className="form-control" onChange={handleSeclect}>
+                  <option value="male">Nam</option>
+                  <option value="female">Nữ</option>
                 </select>
+                {gender}
                 <textarea
                   className="form-control"
                   cols={30}
@@ -90,7 +138,9 @@ const ProfilePage = () => {
                   onChange={handleChangeField}
                 />
                 <div className="ass1-login__send justify-content-center">
-                  <Button type="submit">Cập nhật</Button>
+                  <Button type="submit" loading={loading}>
+                    Cập nhật
+                  </Button>
                 </div>
               </form>
             </div>

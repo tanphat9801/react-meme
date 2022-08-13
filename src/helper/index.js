@@ -9,6 +9,7 @@ export const mappingCurrentUser = (users) => {
     id: users.user.USERID,
     nickName: users.user.fullname,
     avatar: users.user.profilepicture,
+    description: users.user.description,
   };
 };
 

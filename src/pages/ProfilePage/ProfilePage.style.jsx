@@ -5,5 +5,5 @@ export const AvatarProfile = styled.div`
   height: 130px;
   border-radius: 50%;
   margin: 0 auto;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
 `;
