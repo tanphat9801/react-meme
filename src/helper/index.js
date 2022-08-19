@@ -95,6 +95,30 @@ export const validateFormRegister = ({ name, value }) => {
   return error;
 };
 
+export const validateFormChangePassword = ({ name, value }) => {
+  let error = "";
+  if (name === "oldPassword") {
+    if (!value) {
+      error = "Mật khẩu cũ không được rỗng";
+    } else if (value.length < 6) {
+      error = "Mật khẩu phải có it nhất 6 kí tự";
+    }
+  } else if (name === "newPassword") {
+    if (!value) {
+      error = "Mật khẩu mới không được rỗng";
+    } else if (value.length < 6) {
+      error = "Mật khẩu mới phải có it nhất 6 kí tự";
+    }
+  } else if (name === "reNewPassword") {
+    if (!value) {
+      error = "Mật khẩu nhập lại không đúng";
+    } else if (value.length < 6) {
+      error = "Mật khẩu nhập lại phải có ít nhất 6 kí tự";
+    }
+  }
+  return error;
+};
+
 //hashCategory
 
 // export const handleHashCategory = (categories) => {

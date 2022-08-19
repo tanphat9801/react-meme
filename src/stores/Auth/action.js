@@ -2,8 +2,12 @@ import { ACCES_TOKEN, ID } from "../../constants";
 import { mappingCurrentUser, parseJwt } from "../../helper";
 import { authService } from "../../services/auth";
 
+//action type
+
 export const ACT_LOGIN_SUCCESS = "ACT_LOGIN_SUCESS";
 export const ACT_LOGOUT = "ACT_LOGOUT";
+
+//action sync
 
 export const actLogout = () => {
   return {
@@ -22,6 +26,8 @@ export const actLoginSuccess = (users, userid, token) => {
   };
 };
 
+//action async
+
 export const actFetchMeAsync = (userid, token) => {
   if (userid === undefined && token === undefined) {
     userid = localStorage.getItem(ID);
@@ -30,7 +36,6 @@ export const actFetchMeAsync = (userid, token) => {
   return async (dispatch) => {
     try {
       const response = await authService.fetchMe(userid, token);
-      console.log(response);
       const users = mappingCurrentUser(response.data);
       dispatch(actLoginSuccess(users, userid, token));
       return {
@@ -87,6 +92,31 @@ export const actRegisterAsync = ({ email, fullname, password, repassword }) => {
       const responseLogin = await dispatch(actLoginAsync(email, password));
 
       if (response.data.status === 200 && responseLogin.check) {
+        return {
+          check: true,
+        };
+      }
+      return {
+        check: false,
+        error: response.data.error,
+      };
+    } catch (error) {
+      return {
+        check: false,
+        error: error,
+      };
+    }
+  };
+};
+
+export const actChangePasswordAsync = () => {
+  return async (dispatch) => {
+    try {
+      const token = localStorage.getItem(ACCES_TOKEN);
+      console.log(token);
+      const response = await authService.changePass(token);
+      console.log(response);
+      if (response.data.status === 200) {
         return {
           check: true,
         };

@@ -13,7 +13,7 @@ const HistoryPage = () => {
             <div className="ass1-head-user__content">
               <div className="ass1-head-user__image">
                 <a href="/">
-                  <img src="images/cat-1634369_1920.jpg" alt="" />
+                  <img src={data.avatar} alt="" />
                 </a>
               </div>
               <div className="ass1-head-user__info">
@@ -23,41 +23,20 @@ const HistoryPage = () => {
                   </div>
                   <div className="w-100" />
                   <Link
-                    href="/"
-                    className="ass1-head-user__btn-follow ass1-btn"
-                  >
-                    Theo dõi
-                  </Link>
-                  <Link
                     to="/change-password"
                     className="ass1-head-user__btn-follow ass1-btn"
                   >
-                    Đổi mật khẩu
+                    Change Password
                   </Link>
                   <Link
-                    to="/profile"
+                    to="/edit-profile"
                     className="ass1-head-user__btn-follow ass1-btn"
                   >
-                    Profile
+                    Edit Profile
                   </Link>
                   {/* <a href="/" class="ass1-head-user__btn-options ass1-btn-icon"><i class="icon-Options"></i></a> */}
                 </div>
-                <div className="ass1-head-user__info-statistic">
-                  <div className="ass1-btn-icon">
-                    <i className="icon-Post" />
-                    <span>Bài viết: 9999</span>
-                  </div>
-                  <div className="ass1-btn-icon">
-                    <i className="icon-Followers" />
-                    <span>Theo dõi: 99999</span>
-                  </div>
-                  <div className="ass1-btn-icon">
-                    <i className="icon-Following" />
-                    <span>Đang theo dõi: 999</span>
-                  </div>
-                  {/* <div class="ass1-btn-icon"><i class="icon-Upvote"></i><span>Up Vote: 999999</span></div> */}
-                </div>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                <p>{data.description}</p>
               </div>
             </div>
           </div>

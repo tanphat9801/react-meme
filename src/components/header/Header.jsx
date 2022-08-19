@@ -54,10 +54,7 @@ const Header = () => {
 
                   <ul className="dropdown-menu">
                     <li>
-                      <Link to="/edit-profile">Profile</Link>
-                    </li>
-                    <li>
-                      <Link to="/change-password">Change Password</Link>
+                      <Link to="/profile-user">Profile</Link>
                     </li>
                     <li>
                       <Link to="/" onClick={handleLogout}>

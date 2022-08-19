@@ -15,6 +15,13 @@ export const authService = {
       repassword,
     });
   },
+  changePass(token) {
+    return api.call().get("/member/password.php", {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
+  },
   fetchMe(userid, token) {
     return api.call().get("/member/member.php", {
       params: {

@@ -8,9 +8,9 @@ import { useEffect, useState } from "react";
 import { ACCES_TOKEN } from "../../constants";
 import { api } from "../../services/api";
 
+
 const ProfilePage = () => {
   const data = useSelector((state) => state.Auth.currentUser);
-  const [loading, setLoading] = useState(false);
   const [gender, setGender] = useState("");
   const [inputValue, setInputValue] = useState({
     username: {
@@ -53,7 +53,7 @@ const ProfilePage = () => {
   const handleChangeField = (e) => {
     e.preventDefault();
     const name = e.target.name;
-    const value = e.target.value.trim();
+    const value = e.target.value;
 
     setInputValue({
       ...inputValue,
@@ -67,29 +67,24 @@ const ProfilePage = () => {
     setGender(e.target.value);
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
       const formData = new FormData();
       if (userInfo.file) {
         formData.append("avatar", userInfo.file);
       }
-      formData.append("name", inputValue.username.value);
+      formData.append("fullname", inputValue.username.value);
       formData.append("gender", gender);
       formData.append("description", inputValue.textarea.value);
 
       let config = {
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization: "Bearer" + localStorage.getItem(ACCES_TOKEN),
+          Authorization: "Bearer " + localStorage.getItem(ACCES_TOKEN),
         },
       };
-
-      setLoading(true);
-
-      const response = await api
-        .call()
-        .post("/member/update.php", formData, config);
-      console.log(response);
+      await api.call().post("/member/update.php", formData, config);
     } catch (error) {}
   };
 
@@ -124,10 +119,10 @@ const ProfilePage = () => {
                   onChange={handleChangeField}
                 />
                 <select className="form-control" onChange={handleSeclect}>
-                  <option value="male">Nam</option>
-                  <option value="female">Nữ</option>
+                  <option>Giới tính</option>
+                  <option value="nam">Nam</option>
+                  <option value="nu">Nữ</option>
                 </select>
-                {gender}
                 <textarea
                   className="form-control"
                   cols={30}
@@ -138,9 +133,7 @@ const ProfilePage = () => {
                   onChange={handleChangeField}
                 />
                 <div className="ass1-login__send justify-content-center">
-                  <Button type="submit" loading={loading}>
-                    Cập nhật
-                  </Button>
+                  <Button>Cập nhật</Button>
                 </div>
               </form>
             </div>
