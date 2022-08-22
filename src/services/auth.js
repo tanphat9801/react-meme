@@ -15,12 +15,16 @@ export const authService = {
       repassword,
     });
   },
-  changePass(token) {
-    return api.call().get("/member/password.php", {
-      headers: {
-        Authorization: "Bearer " + token,
+  changePass({ token, oldPassword, newPassword, reNewPassword }) {
+    return api.call().post(
+      "/member/password.php",
+      {
+        oldPassword,
+        newPassword,
+        reNewPassword,
       },
-    });
+      { headers: { Authorization: "Bearer " + token } }
+    );
   },
   fetchMe(userid, token) {
     return api.call().get("/member/member.php", {

@@ -20,6 +20,7 @@ const Header = () => {
   const handleLogout = (e) => {
     e.preventDefault();
     dispatch(actLogout());
+    history.push("/");
   };
   return (
     <>

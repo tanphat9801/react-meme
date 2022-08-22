@@ -108,7 +108,6 @@ const ChangePassword = () => {
                   type="password"
                   className="form-control"
                   placeholder="Mật khẩu cũ"
-                  required
                   name="oldPassword"
                   value={formPassword.oldPassword.value}
                   error={formPassword.oldPassword.error}
@@ -118,7 +117,6 @@ const ChangePassword = () => {
                   type="password"
                   className="form-control"
                   placeholder="Mật khẩu mới"
-                  required
                   name="newPassword"
                   value={formPassword.newPassword.value}
                   error={formPassword.newPassword.error}
@@ -128,7 +126,6 @@ const ChangePassword = () => {
                   type="password"
                   className="form-control"
                   placeholder="Xác nhận mật khẩu mới"
-                  required
                   name="reNewPassword"
                   value={formPassword.reNewPassword.value}
                   error={formPassword.reNewPassword.error}

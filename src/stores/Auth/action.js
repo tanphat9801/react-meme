@@ -109,13 +109,25 @@ export const actRegisterAsync = ({ email, fullname, password, repassword }) => {
   };
 };
 
-export const actChangePasswordAsync = () => {
+export const actChangePasswordAsync = ({
+  token,
+  oldPassword,
+  newPassword,
+  reNewPassword,
+}) => {
   return async (dispatch) => {
     try {
-      const token = localStorage.getItem(ACCES_TOKEN);
-      console.log(token);
-      const response = await authService.changePass(token);
-      console.log(response);
+      if (token === undefined) {
+        token = localStorage.getItem(ACCES_TOKEN);
+      }
+
+      const response = await authService.changePass({
+        token,
+        oldPassword,
+        newPassword,
+        reNewPassword,
+      });
+
       if (response.data.status === 200) {
         return {
           check: true,
